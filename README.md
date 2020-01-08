@@ -1,6 +1,6 @@
 # animations_example
 
-&#x27;A new Flutter project. Created by Slidy&#x27;
+&#x27;Um projeto criado em Flutter voltado a animações. Created by Slidy&#x27;
 
 ## Getting Started
 
