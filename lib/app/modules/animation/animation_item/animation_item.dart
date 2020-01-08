@@ -12,7 +12,7 @@ class AnimationItemList extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return AnimatedItem(index: index);
         },
-        itemCount: 20,
+        itemCount: 50,
       ),
     );
   }
