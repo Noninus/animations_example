@@ -18,19 +18,41 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Center(
+          Expanded(
             child: RaisedButton(
               child: Text("Animation Item"),
-              onPressed: () {
-                return Navigator.pushNamed(context, '/animationItem');
-              },
+              onPressed: () => Navigator.pushNamed(context, '/animationItem'),
             ),
           ),
-          Center(
+          Expanded(
             child: RaisedButton(
               child: Text("Animation List Item"),
               onPressed: () {
                 return Navigator.pushNamed(context, '/animationList');
+              },
+            ),
+          ),
+          Expanded(
+            child: RaisedButton(
+              child: Text("Cards alive"),
+              onPressed: () {
+                return Navigator.pushNamed(context, '/cardsAlive');
+              },
+            ),
+          ),
+          Expanded(
+            child: RaisedButton(
+              child: Text("Nubank"),
+              onPressed: () {
+                return Navigator.pushNamed(context, '/nubank');
+              },
+            ),
+          ),
+          Expanded(
+            child: RaisedButton(
+              child: Text("Dialog animated"),
+              onPressed: () {
+                return Navigator.pushNamed(context, '/dialog');
               },
             ),
           )
