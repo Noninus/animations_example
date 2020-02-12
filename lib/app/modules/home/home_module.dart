@@ -1,6 +1,7 @@
 import 'package:animations_example/app/modules/animation/animation_item/animation_item.dart';
 import 'package:animations_example/app/modules/animation/animation_list/animation_list.dart';
 import 'package:animations_example/app/modules/animation/cards_alive/cards_alive.dart';
+import 'package:animations_example/app/modules/animation/clap/clap_widget.dart';
 import 'package:animations_example/app/modules/animation/dialog_animated.dart/dialog_animated.dart';
 import 'package:animations_example/app/modules/animation/nubank/nubank_page.dart';
 import 'package:animations_example/app/modules/home/home_bloc.dart';
@@ -21,6 +22,7 @@ class HomeModule extends ChildModule {
         Router('/cardsAlive', child: (_, args) => CardsAlive()),
         Router('/nubank', child: (_, args) => NubankPage()),
         Router('/dialog', child: (_, args) => DialogAnimatedPage()),
+        Router('/clap', child: (_, args) => ClapWidget()),
       ];
 
   static Inject get to => Inject<HomeModule>.of();

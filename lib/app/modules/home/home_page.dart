@@ -55,6 +55,14 @@ class _HomePageState extends State<HomePage> {
                 return Navigator.pushNamed(context, '/dialog');
               },
             ),
+          ),
+          Expanded(
+            child: RaisedButton(
+              child: Text("Clap animated"),
+              onPressed: () {
+                return Navigator.pushNamed(context, '/clap');
+              },
+            ),
           )
         ],
       ),
