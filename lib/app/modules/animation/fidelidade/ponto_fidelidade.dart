@@ -16,7 +16,7 @@ class _PontoFidelidadeState extends State<PontoFidelidade>
   @override
   void initState() {
     animationController = AnimationController(
-        duration: Duration(milliseconds: widget.value ? 1000 : 500),
+        duration: Duration(milliseconds: widget.value ? 500 : 1000),
         vsync: this);
     animationController.forward();
     super.initState();
@@ -57,7 +57,7 @@ class _PontoFidelidadeState extends State<PontoFidelidade>
                             }
                           : null,
                       child: Image.asset(
-                        'assets/pizza.png',
+                        'assets/hamburguer.png',
                       ),
                     ),
                   ),

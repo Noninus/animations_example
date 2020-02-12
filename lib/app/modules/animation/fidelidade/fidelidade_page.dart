@@ -20,6 +20,7 @@ class _CardsAliveState extends State<FidelidadePage>
         animationController.forward();
       }
     });
+
     animationController.forward();
     super.initState();
   }
@@ -32,21 +33,19 @@ class _CardsAliveState extends State<FidelidadePage>
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
-          title: Text("Pontos animados"),
+          title: Text("Meus pontos"),
+          backgroundColor: Color(0xFFFF6700),
         ),
         body: Center(
             child: Column(
           children: <Widget>[
-            Expanded(child: Container(color: Colors.white70)),
             Expanded(
+              flex: 2,
               child: Column(
                 children: <Widget>[
-                  Container(
-                    height: 5,
-                    color: Colors.red,
-                  ),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
@@ -94,6 +93,24 @@ class _CardsAliveState extends State<FidelidadePage>
                     ),
                   ),
                 ],
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: 15,
+                itemBuilder: (BuildContext context, int index) => Container(
+                  width: width * 0.5,
+                  child: Card(
+                    margin: EdgeInsets.all(8),
+                    child: Center(
+                        child: ListTile(
+                      title: Text('BaconBurguer'),
+                      subtitle: Text('10 pontos'),
+                    )),
+                  ),
+                ),
               ),
             ),
           ],

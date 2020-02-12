@@ -139,8 +139,13 @@ class _ClapWidgetState extends State<ClapWidget> with TickerProviderStateMixin {
       var sparklesWidget = new Positioned(
         child: new Transform.rotate(
             angle: currentAngle - pi / 2,
-            child:
-                new Opacity(opacity: sparklesOpacity, child: Icon(Icons.edit))),
+            child: new Opacity(
+                opacity: sparklesOpacity,
+                child: new Image.asset(
+                  "assets/sparkles.png",
+                  width: 14.0,
+                  height: 14.0,
+                ))),
         left: (sparkleRadius * cos(currentAngle)) + 20,
         top: (sparkleRadius * sin(currentAngle)) + 20,
       );
