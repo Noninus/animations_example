@@ -1,3 +1,4 @@
+import 'package:animations_example/app/modules/animation/fidelidade/easing_widget.dart';
 import 'package:animations_example/app/modules/animation/fidelidade/ponto_fidelidade.dart';
 import 'package:flutter/material.dart';
 
@@ -102,13 +103,15 @@ class _CardsAliveState extends State<FidelidadePage>
                 itemCount: 15,
                 itemBuilder: (BuildContext context, int index) => Container(
                   width: width * 0.5,
-                  child: Card(
-                    margin: EdgeInsets.all(8),
-                    child: Center(
-                        child: ListTile(
-                      title: Text('BaconBurguer'),
-                      subtitle: Text('10 pontos'),
-                    )),
+                  child: EasingAnimationWidget(
+                    child: Card(
+                      margin: EdgeInsets.all(8),
+                      child: Center(
+                          child: ListTile(
+                        title: Text('BaconBurguer'),
+                        subtitle: Text('10 pontos'),
+                      )),
+                    ),
                   ),
                 ),
               ),
