@@ -63,6 +63,22 @@ class _HomePageState extends State<HomePage> {
                 return Navigator.pushNamed(context, '/clap');
               },
             ),
+          ),
+          Expanded(
+            child: RaisedButton(
+              child: Text("background"),
+              onPressed: () {
+                return Navigator.pushNamed(context, '/background');
+              },
+            ),
+          ),
+          Expanded(
+            child: RaisedButton(
+              child: Text("fidelidade"),
+              onPressed: () {
+                return Navigator.pushNamed(context, '/fidelidade');
+              },
+            ),
           )
         ],
       ),
