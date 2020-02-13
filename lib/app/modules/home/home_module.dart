@@ -6,6 +6,7 @@ import 'package:animations_example/app/modules/animation/clap/clap_widget.dart';
 import 'package:animations_example/app/modules/animation/dialog_animated.dart/dialog_animated.dart';
 import 'package:animations_example/app/modules/animation/fidelidade/fidelidade_page.dart';
 import 'package:animations_example/app/modules/animation/nubank/nubank_page.dart';
+import 'package:animations_example/app/modules/animation/redeem/redeem_page.dart';
 import 'package:animations_example/app/modules/home/home_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:animations_example/app/modules/home/home_page.dart';
@@ -27,6 +28,7 @@ class HomeModule extends ChildModule {
         Router('/clap', child: (_, args) => ClapWidget()),
         Router('/background', child: (_, args) => BackGroundColorPage()),
         Router('/fidelidade', child: (_, args) => FidelidadePage()),
+        Router('/redeem', child: (_, args) => RedeemPage()),
       ];
 
   static Inject get to => Inject<HomeModule>.of();
