@@ -225,7 +225,6 @@ class _ClapWidgetState extends State<ClapWidget> with TickerProviderStateMixin {
             ),
             new Text(
               '$_counter',
-              style: Theme.of(context).textTheme.headline4,
             ),
           ],
         ),

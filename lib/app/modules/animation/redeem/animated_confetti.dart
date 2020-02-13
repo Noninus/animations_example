@@ -7,14 +7,14 @@ class AnimatedConfetti extends StatefulWidget {
   AnimatedConfetti({Key key}) : super(key: key);
 
   @override
-  _AnimatedConfettiState createState() => new _AnimatedConfettiState();
+  _AnimatedConfettiState createState() => _AnimatedConfettiState();
 }
 
 class _AnimatedConfettiState extends State<AnimatedConfetti>
     with TickerProviderStateMixin {
   double _sparklesAngle = 0.0;
-  final oneSecond = new Duration(seconds: 1);
-  final twoSeconds = new Duration(seconds: 2);
+  final oneSecond = Duration(seconds: 1);
+  final twoSeconds = Duration(seconds: 3);
   Random random;
   Timer holdTimer, scoreOutETA;
   AnimationController sparklesAnimationController;
@@ -22,30 +22,30 @@ class _AnimatedConfettiState extends State<AnimatedConfetti>
 
   initState() {
     super.initState();
-    random = new Random();
+    random = Random();
 
     sparklesAnimationController =
-        new AnimationController(vsync: this, duration: twoSeconds);
-    sparklesAnimation = new CurvedAnimation(
+        AnimationController(vsync: this, duration: oneSecond);
+    sparklesAnimation = CurvedAnimation(
         parent: sparklesAnimationController, curve: Curves.easeIn);
     sparklesAnimation.addListener(() {
       setState(() {});
     });
-
+    sparklesAnimationController.forward(from: 0.0);
     increment(null); // Take care of tap
-    holdTimer = new Timer.periodic(oneSecond, increment); // Takes care of hold
+    holdTimer = Timer.periodic(twoSeconds, increment); // Takes care of hold
   }
 
   dispose() {
-    super.dispose();
     sparklesAnimationController.dispose();
+    super.dispose();
     holdTimer.cancel();
   }
 
   void increment(Timer t) {
     sparklesAnimationController.forward(from: 0.0);
     setState(() {
-      _sparklesAngle = random.nextDouble() * (2 * pi);
+      _sparklesAngle = random.nextDouble() * (3 * pi);
     });
   }
 
@@ -58,39 +58,32 @@ class _AnimatedConfettiState extends State<AnimatedConfetti>
 
     for (int i = 0; i < 5; ++i) {
       var currentAngle = (firstAngle + ((2 * pi) / 5) * (i));
-      var sparklesWidget = new Positioned(
-        child: new Transform.rotate(
+      var sparklesWidget = Positioned(
+        child: Transform.rotate(
             angle: currentAngle - pi / 2,
-            child: new Opacity(
+            child: Opacity(
                 opacity: sparklesOpacity,
-                child: new Image.asset(
+                child: Image.asset(
                   "assets/sparkles.png",
                   width: 14.0,
                   height: 14.0,
                 ))),
-        left: (sparkleRadius * cos(currentAngle)) + 20,
-        top: (sparkleRadius * sin(currentAngle)) + 20,
+        left: (sparkleRadius * cos(currentAngle) - 10),
+        top: (sparkleRadius * sin(currentAngle) + 40),
       );
       stackChildren.add(sparklesWidget);
     }
 
-    stackChildren.add(Container());
+    stackChildren.add(Container(
+      width: 0,
+    ));
 
-    var widget = new Positioned(
-      child: new Stack(
-        alignment: FractionalOffset.center,
-        overflow: Overflow.visible,
-        children: stackChildren,
-      ),
+    var widget = Stack(
+      alignment: FractionalOffset.center,
+      overflow: Overflow.visible,
+      children: stackChildren,
     );
     return widget;
-  }
-
-  Widget getClapButton() {
-    return Image.asset(
-      'assets/cupom.png',
-      height: 100,
-    );
   }
 
   @override
@@ -100,7 +93,10 @@ class _AnimatedConfettiState extends State<AnimatedConfetti>
       overflow: Overflow.visible,
       children: <Widget>[
         getScoreButton(),
-        getClapButton(),
+        Image.asset(
+          'assets/cupom.png',
+          height: 60,
+        ),
       ],
     );
   }

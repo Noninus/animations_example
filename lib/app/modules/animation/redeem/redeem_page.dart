@@ -29,9 +29,7 @@ class _NubankPageState extends State<RedeemPage>
   }
 
   _showDialog(context) {
-    animationController.reset();
     animationController.forward();
-    animationController.duration = Duration(seconds: 1);
 
     return showDialog(
         context: context,
@@ -63,12 +61,16 @@ class _NubankPageState extends State<RedeemPage>
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: <Widget>[
-                                      AnimatedConfetti(),
-                                      Text(
-                                          "Ganhe o triplo de recompensas em 7 dias"),
-                                      RaisedButton(
-                                        child: Text("R\$ 3,90"),
-                                        onPressed: () {},
+                                      Expanded(child: AnimatedConfetti()),
+                                      Expanded(
+                                        child: Text(
+                                            "Ganhe o triplo de recompensas em 7 dias"),
+                                      ),
+                                      Expanded(
+                                        child: RaisedButton(
+                                          child: Text("R\$ 3,90"),
+                                          onPressed: () {},
+                                        ),
                                       )
                                     ],
                                   ))
