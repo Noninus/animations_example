@@ -1,5 +1,8 @@
 import 'package:animations_example/app/modules/animation/animated_page/components/easing_widget.dart';
+import 'package:animations_example/app/modules/animation/animated_page/components/easing_widget_top.dart';
 import 'package:flutter/material.dart';
+
+import 'components/fidelidade_card.dart';
 
 class AnimatedFidelidadePage extends StatefulWidget {
   @override
@@ -37,7 +40,7 @@ class _AnimatedFidelidadePageState extends State<AnimatedFidelidadePage> {
                 padding: EdgeInsets.only(top: height * 0.125),
                 child: Center(
                   child: Container(
-                    height: height * 0.125,
+                    height: height * 0.15,
                     width: width * 0.7,
                     child: EasingAnimationWidget(
                       child: Card(
@@ -74,39 +77,26 @@ class _AnimatedFidelidadePageState extends State<AnimatedFidelidadePage> {
               )
             ],
           ),
-          Container(
-            height: height * 0.125,
-            child: EasingAnimationWidget(
-              begin: -1,
-              duration: Duration(seconds: 2),
-              child: Row(
-                children: <Widget>[
-                  Expanded(child: CircleAvatar()),
-                  Expanded(
-                      child: CircleAvatar(
-                    child: Icon(Icons.add_shopping_cart),
-                  )),
-                  Expanded(child: CircleAvatar()),
-                ],
-              ),
-            ),
-          ),
           Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                "Prêmios",
-                style: TextStyle(fontSize: 32),
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+              child: EasingAnimationWidget(
+                begin: -1,
+                duration: Duration(seconds: 1),
+                child: Text(
+                  "Prêmios",
+                  style: TextStyle(fontSize: 32),
+                ),
               )),
           Expanded(
-              child: ListView.builder(
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                child: ListTile(
-                  title: Text('teste $index'),
-                ),
-              );
-            },
-            itemCount: 20,
+              child: EasingAnimationWidgetTop(
+            duration: Duration(seconds: 3),
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: 3,
+              itemBuilder: (BuildContext context, int index) {
+                return FidelidadeCard();
+              },
+            ),
           ))
         ],
       ),
