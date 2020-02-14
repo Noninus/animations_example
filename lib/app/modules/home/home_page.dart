@@ -87,6 +87,14 @@ class _HomePageState extends State<HomePage> {
                 return Navigator.pushNamed(context, '/redeem');
               },
             ),
+          ),
+          Expanded(
+            child: RaisedButton(
+              child: Text("animated_fidelidade"),
+              onPressed: () {
+                return Navigator.pushNamed(context, '/animated_fidelidade');
+              },
+            ),
           )
         ],
       ),

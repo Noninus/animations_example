@@ -1,3 +1,4 @@
+import 'package:animations_example/app/modules/animation/animated_page/animated_page.dart';
 import 'package:animations_example/app/modules/animation/animation_item/animation_item.dart';
 import 'package:animations_example/app/modules/animation/animation_list/animation_list.dart';
 import 'package:animations_example/app/modules/animation/background/background_color_page.dart';
@@ -29,6 +30,8 @@ class HomeModule extends ChildModule {
         Router('/background', child: (_, args) => BackGroundColorPage()),
         Router('/fidelidade', child: (_, args) => FidelidadePage()),
         Router('/redeem', child: (_, args) => RedeemPage()),
+        Router('/animated_fidelidade',
+            child: (_, args) => AnimatedFidelidadePage()),
       ];
 
   static Inject get to => Inject<HomeModule>.of();

@@ -68,14 +68,15 @@ class _AnimatedConfettiState extends State<AnimatedConfetti>
                   width: 14.0,
                   height: 14.0,
                 ))),
-        left: (sparkleRadius * cos(currentAngle) - 10),
-        top: (sparkleRadius * sin(currentAngle) + 40),
+        left: (sparkleRadius * cos(currentAngle) + 20),
+        top: (sparkleRadius * sin(currentAngle) + 30),
       );
       stackChildren.add(sparklesWidget);
     }
 
-    stackChildren.add(Container(
-      width: 0,
+    stackChildren.add(Image.asset(
+      'assets/cupom.png',
+      height: 60,
     ));
 
     var widget = Stack(
@@ -88,16 +89,6 @@ class _AnimatedConfettiState extends State<AnimatedConfetti>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: FractionalOffset.center,
-      overflow: Overflow.visible,
-      children: <Widget>[
-        getScoreButton(),
-        Image.asset(
-          'assets/cupom.png',
-          height: 60,
-        ),
-      ],
-    );
+    return getScoreButton();
   }
 }
