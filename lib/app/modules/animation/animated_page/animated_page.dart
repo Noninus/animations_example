@@ -1,3 +1,4 @@
+import 'package:animations_example/app/modules/animation/animated_page/components/animated_text.dart';
 import 'package:animations_example/app/modules/animation/animated_page/components/easing_widget.dart';
 import 'package:animations_example/app/modules/animation/animated_page/components/easing_widget_top.dart';
 import 'package:flutter/material.dart';
@@ -56,11 +57,7 @@ class _AnimatedFidelidadePageState extends State<AnimatedFidelidadePage> {
                               textBaseline: TextBaseline.alphabetic,
                               crossAxisAlignment: CrossAxisAlignment.baseline,
                               children: <Widget>[
-                                Text(
-                                  "67",
-                                  style: TextStyle(
-                                      color: Colors.green[700], fontSize: 50),
-                                ),
+                                AnimatedTextWidget(begin: 134, end: 34),
                                 Text(
                                   "pts.",
                                   style: TextStyle(
