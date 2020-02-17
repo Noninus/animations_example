@@ -1,6 +1,7 @@
-import 'package:animations_example/app/modules/animation/animated_page/details_fidelidade.dart';
 import 'package:animations_example/app/shared/components/fade_route.dart';
 import 'package:flutter/material.dart';
+
+import 'details_index.dart';
 
 class FidelidadeCard extends StatelessWidget {
   const FidelidadeCard({
@@ -10,8 +11,7 @@ class FidelidadeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () =>
-          Navigator.push(context, FadeRoute(page: DetailsFidelidade())),
+      onTap: () => Navigator.push(context, FadeRoute(page: LoginScreen())),
       child: Card(
         margin: EdgeInsets.only(top: 10, bottom: 10, left: 16, right: 16),
         elevation: 6,

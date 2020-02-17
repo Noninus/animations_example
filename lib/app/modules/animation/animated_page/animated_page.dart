@@ -24,8 +24,8 @@ class _AnimatedFidelidadePageState extends State<AnimatedFidelidadePage> {
                 decoration: BoxDecoration(color: Color(0xFFFF6700), boxShadow: [
                   BoxShadow(
                     color: Colors.grey,
-                    blurRadius: 10, // has the effect of softening the shadow
-                    spreadRadius: 2, // has the effect of extending the shadow
+                    blurRadius: 10,
+                    spreadRadius: 2,
                   )
                 ]),
                 height: height * 0.2,
