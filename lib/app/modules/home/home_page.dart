@@ -95,6 +95,14 @@ class _HomePageState extends State<HomePage> {
                 return Navigator.pushNamed(context, '/animated_fidelidade');
               },
             ),
+          ),
+          Expanded(
+            child: RaisedButton(
+              child: Text("restaurante"),
+              onPressed: () {
+                return Navigator.pushNamed(context, '/restaurante');
+              },
+            ),
           )
         ],
       ),

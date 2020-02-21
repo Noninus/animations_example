@@ -8,6 +8,7 @@ import 'package:animations_example/app/modules/animation/dialog_animated.dart/di
 import 'package:animations_example/app/modules/animation/fidelidade/fidelidade_page.dart';
 import 'package:animations_example/app/modules/animation/nubank/nubank_page.dart';
 import 'package:animations_example/app/modules/animation/redeem/redeem_page.dart';
+import 'package:animations_example/app/modules/animation/restaurante/restaurante_page.dart';
 import 'package:animations_example/app/modules/home/home_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:animations_example/app/modules/home/home_page.dart';
@@ -32,6 +33,7 @@ class HomeModule extends ChildModule {
         Router('/redeem', child: (_, args) => RedeemPage()),
         Router('/animated_fidelidade',
             child: (_, args) => AnimatedFidelidadePage()),
+        Router('/restaurante', child: (_, args) => RestaurantePage()),
       ];
 
   static Inject get to => Inject<HomeModule>.of();
