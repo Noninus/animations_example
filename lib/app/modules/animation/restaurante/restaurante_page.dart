@@ -1,6 +1,5 @@
 import 'package:animations_example/app/modules/animation/animated_page/components/easing_widget.dart';
 import 'package:animations_example/app/modules/animation/restaurante/restaurante_card_extent.dart';
-import 'package:animations_example/app/modules/animation/restaurante/testChanger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 
@@ -12,12 +11,41 @@ class RestaurantePage extends StatefulWidget {
 class _RestaurantePageState extends State<RestaurantePage>
     with SingleTickerProviderStateMixin {
   TabController tabController;
-  StickyHeaderController stickyController;
+  StickyHeaderController controller;
+  ScrollController scrollController;
+  bool isAppBarVisibile = false;
+  List<ValueKey> listKeys = List();
+
+  Widget retornarGrupos(int grupoId) {
+    ValueKey currentKey = ValueKey(grupoId);
+
+    listKeys.add(currentKey);
+    return _StickyHeaderList(key: currentKey, index: grupoId);
+  }
 
   @override
   void initState() {
-    tabController = TabController(length: 10, vsync: this);
-    stickyController = StickyHeaderController();
+    scrollController = ScrollController();
+    tabController = TabController(length: 3, vsync: this);
+    controller = StickyHeaderController();
+    controller.addListener(() {
+      print(controller.stickyHeaderScrollOffset);
+      tabController.animateTo(0);
+    });
+
+    scrollController.addListener(() {
+      if (scrollController.offset > 512.0) {
+        setState(() {
+          isAppBarVisibile = true;
+        });
+      } else {
+        if (isAppBarVisibile) {
+          setState(() {
+            isAppBarVisibile = false;
+          });
+        }
+      }
+    });
     super.initState();
   }
 
@@ -27,9 +55,30 @@ class _RestaurantePageState extends State<RestaurantePage>
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        body: SafeArea(
-      child: CustomScrollView(
+      body: CustomScrollView(
+        controller: scrollController,
         slivers: <Widget>[
+          isAppBarVisibile
+              ? SliverAppBar(
+                  pinned: true,
+                  floating: true,
+                  expandedHeight: 0,
+                  bottom: TabBar(
+                    onTap: (id) {
+                      //TODO - Arrumar key aqui
+                      // Scrollable.ensureVisible(listKeys[id].currentContext,
+                      //     duration: Duration(seconds: 1));
+                    },
+                    controller: tabController,
+                    isScrollable: true,
+                    tabs: [
+                      Tab(text: 'Pizzas'),
+                      Tab(text: 'Lanches'),
+                      Tab(text: 'Bebidas'),
+                    ],
+                  ),
+                )
+              : SliverToBoxAdapter(child: Container()),
           SliverList(
             delegate: SliverChildListDelegate(
               [
@@ -185,83 +234,74 @@ class _RestaurantePageState extends State<RestaurantePage>
                     ),
                   ),
                 ),
-                Divider(),
               ],
             ),
           ),
-          SliverStickyHeader(
-            controller: StickyHeaderController(),
-            header: Container(
-              height: 50.0,
-              color: Colors.blueGrey[700],
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'PIZZA #1',
-                style: const TextStyle(color: Colors.white),
-              ),
-            ),
-            sliver: SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, i) => ListTile(
-                  leading: CircleAvatar(
-                    child: Text('0'),
-                  ),
-                  title: Text('List tile #$i'),
-                ),
-                childCount: 14,
-              ),
-            ),
-          ),
-          SliverStickyHeader(
-            controller: stickyController,
-            header: Container(
-              height: 50.0,
-              color: Colors.blueGrey[700],
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'BURGUER #2',
-                style: const TextStyle(color: Colors.white),
-              ),
-            ),
-            sliver: SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, i) => ListTile(
-                  leading: CircleAvatar(
-                    child: Text('0'),
-                  ),
-                  title: Text('List tile #$i'),
-                ),
-                childCount: 9,
-              ),
-            ),
-          ),
-          SliverStickyHeader(
-            header: Container(
-              height: 50.0,
-              color: Colors.blueGrey[700],
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'BEBIDAS #3',
-                style: const TextStyle(color: Colors.white),
-              ),
-            ),
-            sliver: SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, i) => ListTile(
-                  leading: CircleAvatar(
-                    child: Text('0'),
-                  ),
-                  title: Text('List tile #$i'),
-                ),
-                childCount: 4,
-              ),
-            ),
-          )
+          retornarGrupos(0),
+          retornarGrupos(1),
+          retornarGrupos(2),
+          retornarGrupos(3)
         ],
       ),
-    ));
+    );
+  }
+}
+
+class _StickyHeaderList extends StatefulWidget {
+  const _StickyHeaderList({
+    Key key,
+    this.index,
+  }) : super(key: key);
+
+  final int index;
+
+  @override
+  __StickyHeaderListState createState() => __StickyHeaderListState();
+}
+
+class __StickyHeaderListState extends State<_StickyHeaderList> {
+  @override
+  Widget build(BuildContext context) {
+    return SliverStickyHeader(
+      header: Header(index: widget.index),
+      sliver: SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context, i) => ListTile(
+            leading: CircleAvatar(
+              child: Text('${widget.index}'),
+            ),
+            title: Text('List tile #$i'),
+          ),
+          childCount: 20,
+        ),
+      ),
+    );
+  }
+}
+
+class Header extends StatelessWidget {
+  const Header({
+    Key key,
+    this.index,
+    this.title,
+    this.color = Colors.lightBlue,
+  }) : super(key: key);
+
+  final String title;
+  final int index;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 60,
+      color: color,
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      alignment: Alignment.centerLeft,
+      child: Text(
+        title ?? 'Header #$index',
+        style: const TextStyle(color: Colors.white),
+      ),
+    );
   }
 }
