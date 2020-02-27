@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class TesterChanger extends StatefulWidget {
-  final TabController tab;
+  final ScrollController scrollController;
 
-  const TesterChanger({Key key, this.tab}) : super(key: key);
+  const TesterChanger({Key key, this.scrollController}) : super(key: key);
   @override
   _TesterChangerState createState() => _TesterChangerState();
 }
@@ -11,15 +11,18 @@ class TesterChanger extends StatefulWidget {
 class _TesterChangerState extends State<TesterChanger> {
   @override
   void initState() {
-    widget.tab.animateTo(1);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text("mudar"),
-      subtitle: Text('mudou'),
+    return InkWell(
+      onTap: () => widget.scrollController.animateTo(100.0,
+          curve: Curves.easeOut, duration: Duration(seconds: 1)),
+      child: ListTile(
+        title: Text("mudar"),
+        subtitle: Text('mudou'),
+      ),
     );
   }
 }
