@@ -1,6 +1,7 @@
 import 'package:animations_example/app/modules/animation/animated_page/components/easing_widget.dart';
 import 'package:animations_example/app/modules/animation/restaurante/restaurante_card_extent.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 
 class RestaurantePage extends StatefulWidget {
@@ -14,13 +15,21 @@ class _RestaurantePageState extends State<RestaurantePage>
   StickyHeaderController controller;
   ScrollController scrollController;
   bool isAppBarVisibile = false;
-  List<ValueKey> listKeys = List();
+  List<GlobalKey> listKeys = List();
 
-  Widget retornarGrupos(int grupoId) {
-    ValueKey currentKey = ValueKey(grupoId);
+  double currentOffset = 0.0;
+  bool changingTabBar = false;
 
-    listKeys.add(currentKey);
-    return _StickyHeaderList(key: currentKey, index: grupoId);
+  listarCardapio() sync* {
+    listKeys = List();
+    for (int i = 0; i < 3; i++) {
+      yield retornarGrupos(i, GlobalKey());
+    }
+  }
+
+  Widget retornarGrupos(int grupoId, GlobalKey key) {
+    listKeys.add(key);
+    return _StickyHeaderList(key: key, index: grupoId, controller: controller);
   }
 
   @override
@@ -28,16 +37,36 @@ class _RestaurantePageState extends State<RestaurantePage>
     scrollController = ScrollController();
     tabController = TabController(length: 3, vsync: this);
     controller = StickyHeaderController();
+
     controller.addListener(() {
-      print(controller.stickyHeaderScrollOffset);
-      tabController.animateTo(0);
+      if (!changingTabBar) {
+        if (currentOffset > controller.stickyHeaderScrollOffset) {
+          if (tabController.index >= 0 &&
+              (tabController.index - 1 < tabController.length)) {
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              tabController.animateTo(tabController.index - 1);
+            });
+          }
+        } else {
+          if (currentOffset != 0.0 &&
+              tabController.index >= 0 &&
+              (tabController.index + 1 < tabController.length)) {
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              tabController.animateTo(tabController.index + 1);
+            });
+          }
+        }
+      }
+      currentOffset = controller.stickyHeaderScrollOffset;
     });
 
     scrollController.addListener(() {
-      if (scrollController.offset > 512.0) {
-        setState(() {
-          isAppBarVisibile = true;
-        });
+      if (scrollController.offset > 300) {
+        if (!isAppBarVisibile) {
+          setState(() {
+            isAppBarVisibile = true;
+          });
+        }
       } else {
         if (isAppBarVisibile) {
           setState(() {
@@ -60,17 +89,37 @@ class _RestaurantePageState extends State<RestaurantePage>
         slivers: <Widget>[
           isAppBarVisibile
               ? SliverAppBar(
+                  elevation: 0,
+                  backgroundColor: Colors.white,
                   pinned: true,
-                  floating: true,
-                  expandedHeight: 0,
+                  leading: BackButton(color: Color(0xFFFF6700)),
+                  title: Column(
+                    children: <Widget>[
+                      Text(
+                        "Pizzaria Donatello",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      Text(
+                        'Entrega em 40min',
+                        style:
+                            TextStyle(fontSize: 12, color: Color(0xFFFF6700)),
+                      )
+                    ],
+                  ),
+                  actions: <Widget>[Icon(Icons.search)],
                   bottom: TabBar(
                     onTap: (id) {
-                      //TODO - Arrumar key aqui
-                      // Scrollable.ensureVisible(listKeys[id].currentContext,
-                      //     duration: Duration(seconds: 1));
+                      changingTabBar = true;
+                      Scrollable.ensureVisible(listKeys[id].currentContext,
+                              duration: Duration(seconds: 1))
+                          .then((value) => changingTabBar = false);
                     },
                     controller: tabController,
                     isScrollable: true,
+                    labelColor: Color(0xFFFF6700),
+                    labelStyle: TextStyle(fontSize: 20),
+                    indicatorColor: Color(0xFFFF6700),
+                    unselectedLabelColor: Colors.grey,
                     tabs: [
                       Tab(text: 'Pizzas'),
                       Tab(text: 'Lanches'),
@@ -237,10 +286,7 @@ class _RestaurantePageState extends State<RestaurantePage>
               ],
             ),
           ),
-          retornarGrupos(0),
-          retornarGrupos(1),
-          retornarGrupos(2),
-          retornarGrupos(3)
+          ...listarCardapio()
         ],
       ),
     );
@@ -251,9 +297,11 @@ class _StickyHeaderList extends StatefulWidget {
   const _StickyHeaderList({
     Key key,
     this.index,
+    this.controller,
   }) : super(key: key);
 
   final int index;
+  final StickyHeaderController controller;
 
   @override
   __StickyHeaderListState createState() => __StickyHeaderListState();
@@ -263,7 +311,8 @@ class __StickyHeaderListState extends State<_StickyHeaderList> {
   @override
   Widget build(BuildContext context) {
     return SliverStickyHeader(
-      header: Header(index: widget.index),
+      controller: widget.controller,
+      header: Header(index: widget.index, color: Colors.white),
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
           (context, i) => ListTile(
@@ -295,12 +344,17 @@ class Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 60,
-      color: color,
+      decoration: BoxDecoration(
+        color: color,
+        border: Border(
+          bottom: BorderSide(width: 1.0, color: Colors.grey),
+        ),
+      ),
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       alignment: Alignment.centerLeft,
       child: Text(
         title ?? 'Header #$index',
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.black, fontSize: 20),
       ),
     );
   }

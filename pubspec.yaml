@@ -14,13 +14,16 @@ description: &#x27;A new Flutter project. Created by Slidy&#x27;
 version: 1.0.0+1
  
 environment:
-  sdk: ">=2.1.0 <3.0.0" 
+  sdk: ">=2.6.0 <3.0.0" 
+
+  
 
 dependencies:
   dio: ^3.0.8
   rxdart: ^0.23.1
   flutter_sticky_header: ^0.4.2
   flutter_modular: ^0.1.8 
+  scroll_to_index: any
   flutter:
     sdk: flutter
 
