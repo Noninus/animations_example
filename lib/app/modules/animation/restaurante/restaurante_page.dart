@@ -233,10 +233,13 @@ class _RestaurantePageState extends State<RestaurantePage>
                           child: Column(
                             children: <Widget>[
                               Expanded(
-                                child: Container(
-                                    margin: const EdgeInsets.all(16),
+                                child: Card(
+                                  margin: const EdgeInsets.all(16),
+                                  color: Colors.red,
+                                  child: Container(
                                     width: width * 0.7,
-                                    color: Colors.red),
+                                  ),
+                                ),
                               ),
                               Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -251,10 +254,13 @@ class _RestaurantePageState extends State<RestaurantePage>
                           child: Column(
                             children: <Widget>[
                               Expanded(
-                                child: Container(
-                                    margin: const EdgeInsets.all(16),
+                                child: Card(
+                                  margin: const EdgeInsets.all(16),
+                                  color: Colors.green,
+                                  child: Container(
                                     width: width * 0.7,
-                                    color: Colors.green),
+                                  ),
+                                ),
                               ),
                               Column(children: <Widget>[
                                 Text("Calzones"),
@@ -267,10 +273,13 @@ class _RestaurantePageState extends State<RestaurantePage>
                           child: Column(
                             children: <Widget>[
                               Expanded(
-                                child: Container(
-                                    margin: const EdgeInsets.all(16),
+                                child: Card(
+                                  margin: const EdgeInsets.all(16),
+                                  color: Colors.yellow,
+                                  child: Container(
                                     width: width * 0.7,
-                                    color: Colors.yellow),
+                                  ),
+                                ),
                               ),
                               Column(children: <Widget>[
                                 Text("Saladas"),
@@ -331,7 +340,7 @@ class __StickyHeaderListState extends State<_StickyHeaderList> {
       header: Header(index: widget.index, color: Colors.white),
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
-          (context, i) => ProdutoCard(title: "$widget.index"),
+          (context, i) => ProdutoCard(title: "${widget.index}"),
           childCount: 20,
         ),
       ),
