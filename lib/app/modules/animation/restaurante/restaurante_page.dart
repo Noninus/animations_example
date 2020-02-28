@@ -293,6 +293,22 @@ class _RestaurantePageState extends State<RestaurantePage>
   }
 }
 
+class ProdutoCard extends StatelessWidget {
+  const ProdutoCard({
+    Key key,
+    this.title,
+  }) : super(key: key);
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text("$title"),
+    );
+  }
+}
+
 class _StickyHeaderList extends StatefulWidget {
   const _StickyHeaderList({
     Key key,
@@ -315,12 +331,7 @@ class __StickyHeaderListState extends State<_StickyHeaderList> {
       header: Header(index: widget.index, color: Colors.white),
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
-          (context, i) => ListTile(
-            leading: CircleAvatar(
-              child: Text('${widget.index}'),
-            ),
-            title: Text('List tile #$i'),
-          ),
+          (context, i) => ProdutoCard(title: "$widget.index"),
           childCount: 20,
         ),
       ),
