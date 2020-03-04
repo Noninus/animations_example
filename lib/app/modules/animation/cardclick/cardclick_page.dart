@@ -56,17 +56,15 @@ class Page2 extends StatefulWidget {
 
 class _Page2State extends State<Page2> with SingleTickerProviderStateMixin {
   ScrollController scrollController;
-  double marginScreen = 1;
   Animation animation;
   AnimationController animationController;
   @override
   void initState() {
     animationController =
         AnimationController(duration: Duration(seconds: 1), vsync: this);
-    animation = Tween<double>(begin: -1, end: 0).animate(
+    animation = Tween<double>(begin: 1, end: 0.9).animate(
         CurvedAnimation(parent: animationController, curve: Curves.elasticOut));
 
-    // animationController.forward();
     SystemChrome.setEnabledSystemUIOverlays([]);
     scrollController = ScrollController();
 
@@ -74,14 +72,10 @@ class _Page2State extends State<Page2> with SingleTickerProviderStateMixin {
     super.initState();
   }
 
-  _scrollListener() {
+  _scrollListener() async {
     if (scrollController.offset < 0) {
-      setState(() {
-        marginScreen = 1 - scrollController.offset;
-        print(marginScreen);
-      });
       if (scrollController.offset < -25) {
-        scrollController.jumpTo(-24.999);
+        await animationController.forward();
 
         Navigator.pop(context);
       }
@@ -98,25 +92,31 @@ class _Page2State extends State<Page2> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Hero(
-          tag: '1',
-          child: Transform.scale(
-              scale: marginScreen,
-              child: ListView(
-                controller: scrollController,
-                children: <Widget>[
-                  Container(
-                    color: Colors.green,
-                    child: Text('aasdasdmanjfdgfjisnkejnkejnewofmofm ofm k'),
-                    width: 200,
-                    height: 600,
-                  ),
-                  Container(
-                    color: Colors.green,
-                    width: 200,
-                    height: 600,
-                  )
-                ],
-              ))),
+        tag: '1',
+        child: AnimatedBuilder(
+            animation: animationController,
+            builder: (BuildContext context, Widget child) {
+              return Transform.scale(
+                  scale: animation.value,
+                  child: ListView(
+                    controller: scrollController,
+                    children: <Widget>[
+                      Container(
+                        color: Colors.green,
+                        child:
+                            Text('aasdasdmanjfdgfjisnkejnkejnewofmofm ofm k'),
+                        width: 200,
+                        height: 600,
+                      ),
+                      Container(
+                        color: Colors.green,
+                        width: 200,
+                        height: 600,
+                      )
+                    ],
+                  ));
+            }),
+      ),
     );
   }
 }
