@@ -54,16 +54,32 @@ class Page2 extends StatefulWidget {
   _Page2State createState() => _Page2State();
 }
 
-class _Page2State extends State<Page2> {
+class _Page2State extends State<Page2> with SingleTickerProviderStateMixin {
   ScrollController scrollController;
-  double marginScreen = 0.0;
+  double marginScreen = 1;
+  Animation animation;
+  AnimationController animationController;
+  @override
+  void initState() {
+    animationController =
+        AnimationController(duration: Duration(seconds: 1), vsync: this);
+    animation = Tween<double>(begin: -1, end: 0).animate(
+        CurvedAnimation(parent: animationController, curve: Curves.elasticOut));
+
+    // animationController.forward();
+    SystemChrome.setEnabledSystemUIOverlays([]);
+    scrollController = ScrollController();
+
+    scrollController.addListener(_scrollListener);
+    super.initState();
+  }
 
   _scrollListener() {
     if (scrollController.offset < 0) {
       setState(() {
-        marginScreen = scrollController.offset.abs();
+        marginScreen = 1 - scrollController.offset;
+        print(marginScreen);
       });
-      print(scrollController.offset);
       if (scrollController.offset < -25) {
         scrollController.jumpTo(-24.999);
 
@@ -73,43 +89,34 @@ class _Page2State extends State<Page2> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    SystemChrome.setEnabledSystemUIOverlays([]);
-    scrollController = ScrollController();
-
-    scrollController.addListener(_scrollListener);
-  }
-
-  @override
   void dispose() {
     super.dispose();
+    animationController.dispose();
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
       body: Hero(
-        tag: '1',
-        child: Container(
-            margin: EdgeInsets.all(marginScreen),
-            child: ListView(
-              controller: scrollController,
-              children: <Widget>[
-                Container(
-                  color: Colors.green,
-                  child: Text('aasdasdmanjfdgfjisnkejnkejnewofmofm ofm k'),
-                  width: 200,
-                  height: 600,
-                ),
-                Container(
-                  color: Colors.green,
-                  width: 200,
-                  height: 600,
-                )
-              ],
-            )),
-      ),
+          tag: '1',
+          child: Transform.scale(
+              scale: marginScreen,
+              child: ListView(
+                controller: scrollController,
+                children: <Widget>[
+                  Container(
+                    color: Colors.green,
+                    child: Text('aasdasdmanjfdgfjisnkejnkejnewofmofm ofm k'),
+                    width: 200,
+                    height: 600,
+                  ),
+                  Container(
+                    color: Colors.green,
+                    width: 200,
+                    height: 600,
+                  )
+                ],
+              ))),
     );
   }
 }
