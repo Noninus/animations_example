@@ -10,6 +10,7 @@ import 'package:animations_example/app/modules/animation/fidelidade/fidelidade_p
 import 'package:animations_example/app/modules/animation/nubank/nubank_page.dart';
 import 'package:animations_example/app/modules/animation/redeem/redeem_page.dart';
 import 'package:animations_example/app/modules/animation/restaurante/restaurante_page.dart';
+import 'package:animations_example/app/modules/animation/test_keyboard/test_keyboard.dart';
 import 'package:animations_example/app/modules/home/home_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:animations_example/app/modules/home/home_page.dart';
@@ -36,6 +37,7 @@ class HomeModule extends ChildModule {
             child: (_, args) => AnimatedFidelidadePage()),
         Router('/restaurante', child: (_, args) => RestaurantePage()),
         Router('/cardclick', child: (_, args) => CardClickPage()),
+        Router('/keyboardtest', child: (_, args) => TestKeyboardPage()),
       ];
 
   static Inject get to => Inject<HomeModule>.of();

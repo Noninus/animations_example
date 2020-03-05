@@ -112,6 +112,14 @@ class _HomePageState extends State<HomePage> {
                   return Navigator.pushNamed(context, '/cardclick');
                 },
               ),
+            ),
+            Expanded(
+              child: RaisedButton(
+                child: Text("keyboardtest"),
+                onPressed: () {
+                  return Navigator.pushNamed(context, '/keyboardtest');
+                },
+              ),
             )
           ],
         ),
